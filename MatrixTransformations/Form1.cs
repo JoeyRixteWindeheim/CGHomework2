@@ -12,10 +12,8 @@ namespace MatrixTransformations
         AxisY y_axis;
 
         // Objects
-        Square square;
-        Square square2;
-        Square square3;
         Cube cube1;
+        DisplayValues displayValues;
         
 
         // Window dimensions
@@ -30,39 +28,13 @@ namespace MatrixTransformations
             this.Height = HEIGHT;
             this.DoubleBuffered = true;
 
-            Vector2 v1 = new Vector2();
-            Console.WriteLine(v1);
-            Vector2 v2 = new Vector2(1, 2);
-            Console.WriteLine(v2);
-            Vector2 v3 = new Vector2(2, 6);
-            Console.WriteLine(v3);
-            Vector2 v4 = v2 + v3;
-            Console.WriteLine(v4); // 3, 8
-
-            Matrix m1 = new Matrix(2,2);
-            m1.mat = new float[2, 2] { { 1, 0 }, { 0, 1 } };
-            Console.WriteLine(m1); // 1, 0, 0, 1
-            Matrix m2 = new Matrix(2, 2);
-            m2.mat = new float[2, 2] { { 2, 4 }, { -1, 3 } };
-            Console.WriteLine(m2);
-            Console.WriteLine(m1 + m2); // 3, 4, -1, 4
-            Console.WriteLine(m1 - m2); // -1, -4, 1, -2
-            Console.WriteLine(m2 * m2); // 0, 20, -5, 5
-
-            //Console.WriteLine(m2 * v3); // 28, 16
-
             // Define axes
             x_axis = new AxisX(200);
             y_axis = new AxisY(200);
 
             // Create object
-            square = new Square(Color.Purple,100);
-            //square2 = new Square(Color.Cyan, 100);
-            //square2.Scale(1.5f);
-            //square3 = new Square(Color.Orange, 100);
-            //square3.Rotate(0.5f);
-
             cube1 = new Cube(Color.Black);
+            displayValues = new DisplayValues(cube1);
 
         }
 
@@ -74,11 +46,8 @@ namespace MatrixTransformations
             //x_axis.Draw(e.Graphics, VectorListToScreenCoords(x_axis.vb));
             //y_axis.Draw(e.Graphics, VectorListToScreenCoords(y_axis.vb));
 
-            // Draw square
-            //square.Draw(e.Graphics, VectorListToScreenCoords(square.vb));
-            //square2.Draw(e.Graphics, VectorListToScreenCoords(square2.vb));
-            //square3.Draw(e.Graphics, VectorListToScreenCoords(square3.vb));
             cube1.Draw(e.Graphics, ToPerspective(cube1.vb));
+            displayValues.Draw(e.Graphics);
         }
 
         public List<Vector2> VectorListToScreenCoords(List<Vector2> vectors)
@@ -142,21 +111,21 @@ namespace MatrixTransformations
         {
             if (e.KeyCode == Keys.Up)
             {
-                square.Scale(1.1f);
+                cube1.Translate(new Vector3(0, 0, 2));
             }
             if (e.KeyCode == Keys.Down)
             {
-                square.Scale(0.9f);
+                cube1.Translate(new Vector3(0, 0, -2));
             }
             if (e.KeyCode == Keys.Left)
             {
-                square.Rotate(0.1f);
+                cube1.Translate(new Vector3(-2, 0, 0));
             }
             if (e.KeyCode == Keys.Right)
             {
-                square.Rotate(-0.1f);
+                cube1.Translate(new Vector3(2, 0, 0));
             }
-            if(e.KeyCode == Keys.Z)
+            if (e.KeyCode == Keys.Z)
             {
                 cube1.RotateZ(0.1f);
             }
@@ -167,6 +136,10 @@ namespace MatrixTransformations
             if (e.KeyCode == Keys.X)
             {
                 cube1.RotateX(0.1f);
+            }
+            if (e.KeyCode == Keys.C)
+            {
+                cube1.Reset();
             }
             Invalidate();
 
