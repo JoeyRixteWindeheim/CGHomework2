@@ -1,0 +1,20 @@
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\bin\Debug\MatrixTransformations.exe.config
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\bin\Debug\MatrixTransformations.exe
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\bin\Debug\MatrixTransformations.pdb
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.csprojAssemblyReference.cache
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.Form1.resources
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.Properties.Resources.resources
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.GenerateResource.cache
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.CoreCompileInputs.cache
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.exe
+C:\Users\Rixte de Wolff\Desktop\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.pdb
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\bin\Debug\MatrixTransformations.exe.config
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\bin\Debug\MatrixTransformations.exe
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\bin\Debug\MatrixTransformations.pdb
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.csprojAssemblyReference.cache
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.Form1.resources
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.Properties.Resources.resources
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.GenerateResource.cache
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.CoreCompileInputs.cache
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.exe
+C:\Users\Rixte de Wolff\Desktop\graphics homework\CG - Lecture 2 - 0 - Sleketon start\MatrixTransformations\obj\Debug\MatrixTransformations.pdb
