@@ -58,25 +58,25 @@ namespace MatrixTransformations
                 switch (phase)
                 {
                     case 0:
-                        Phase0(interval);
+                        Phase0(interval); // increase scale
                         break;
                     case 1:
-                        Phase1(interval);
+                        Phase1(interval); // decrease scale
                         break;
                     case 2:
-                        Phase2(interval);
+                        Phase2(interval); // rotate x
                         break;
                     case 3:
-                        Phase3(interval);
+                        Phase3(interval); // rotate x back
                         break;
                     case 4:
-                        Phase4(interval);
+                        Phase4(interval); // rotate y
                         break;
                     case 5:
-                        Phase5(interval);
+                        Phase5(interval); // rotate y back
                         break;
                     case 6:
-                        Phase6(interval);
+                        Phase6(interval); // reset phi and theta
                         break;
                     default:
                         phase = 0;
