@@ -18,6 +18,8 @@ namespace MatrixTransformations
         public int YPosition { get => _cube.PositionY; }
         public int ZPosition { get => _cube.PositionZ; }
 
+        public float Size { get => _cube.Size; }
+
         private int _stringposition;
         private int _fontSize = 10;
         public DisplayValues(Cube cube)
@@ -29,6 +31,7 @@ namespace MatrixTransformations
             DrawString(g, "x rotation: " + XRotation);
             DrawString(g, "y rotation: " + YRotation);
             DrawString(g, "z rotation: " + ZRotation);
+            DrawString(g, "cube size: " + Size*2);
             DrawString(g, "x position: " + XPosition);
             DrawString(g, "y position: " + YPosition);
             DrawString(g, "z position: " + ZPosition);

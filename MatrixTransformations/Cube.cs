@@ -10,7 +10,14 @@ namespace MatrixTransformations
     public class Cube
     {
         Color color;
-        public float size;
+        private float size;
+
+        public float Size { 
+            get { return size; } 
+            set {
+                Scale(value / size);
+            } 
+        }
         private float weight;
 
         public List<Vector3> vb;
@@ -99,20 +106,21 @@ namespace MatrixTransformations
             RotationZ = 0;
             RotationX = 0;
             RotationY = 0;
+            size = 5;
             _position = new Vector3();
 
 
             vb = new List<Vector3>
             {
-                new Vector3(size, size, size),
-                new Vector3(size, size, -size),
-                new Vector3(size, -size, -size),
-                new Vector3(size, -size, size),
+                new Vector3(Size, Size, Size),
+                new Vector3(Size, Size, -Size),
+                new Vector3(Size, -Size, -Size),
+                new Vector3(Size, -Size, Size),
 
-                new Vector3(-size, size, size),
-                new Vector3(-size, size, -size),
-                new Vector3(-size, -size, -size),
-                new Vector3(-size, -size, size)
+                new Vector3(-Size, Size, Size),
+                new Vector3(-Size, Size, -Size),
+                new Vector3(-Size, -Size, -Size),
+                new Vector3(-Size, -Size, Size)
             };
 
         }

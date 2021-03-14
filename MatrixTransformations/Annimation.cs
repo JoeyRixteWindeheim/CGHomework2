@@ -19,28 +19,28 @@ namespace MatrixTransformations
         private double yrotation;
         private double phi;
         private double theta;
+        private Form1 form;
 
 
 
-        public Annimation(Cube cube)
+        public Annimation(Form1 form, Cube cube)
         {
             Cube = cube;
             animate = false;
+            this.form = form;
         }
 
         public void StartAnimation()
         {
+            if (animate)
+                return;
 
             phase = 0;
             lastUpdate = DateTime.Now;
             animate = true;
 
             phi = theta = xrotation = yrotation = 0;
-            basescale = Cube.size;
-
-            var ts = new ThreadStart(Animate);
-            var backgroundThread = new Thread(ts);
-            backgroundThread.Start();
+            basescale = Cube.Size;
             
         }
 
@@ -51,20 +51,49 @@ namespace MatrixTransformations
 
         public void Animate()
         {
-            while (animate)
+            if(animate)
             {
                 TimeSpan interval = DateTime.Now - lastUpdate;
                 lastUpdate = DateTime.Now;
-
-
-
+                switch (phase)
+                {
+                    case 0:
+                        Phase0(interval);
+                        break;
+                    case 1:
+                        Phase1(interval);
+                        break;
+                    case 2:
+                        Phase2(interval);
+                        break;
+                    case 3:
+                        Phase3(interval);
+                        break;
+                    case 4:
+                        Phase4(interval);
+                        break;
+                    case 5:
+                        Phase5(interval);
+                        break;
+                    case 6:
+                        Phase6(interval);
+                        break;
+                    default:
+                        phase = 0;
+                        break;
+                }
+                form.Invalidate();
             }
         }
 
         public void Phase0(TimeSpan interval)
         {
-            Cube.Scale((float)(1 + interval.TotalSeconds));
-            if(  basescale*1.5 <= Cube.size)
+            Cube.Size += (float)interval.TotalSeconds*5;
+
+            theta -= interval.TotalSeconds * 5;
+            Form1.Theta -= interval.TotalSeconds * 5;
+
+            if (  basescale*1.5 <= Cube.Size)
             {
                 phase++;
             }
@@ -72,7 +101,10 @@ namespace MatrixTransformations
         public void Phase1(TimeSpan interval)
         {
             Cube.Scale((float)(1 - interval.TotalSeconds));
-            if (basescale  >= Cube.size)
+
+            theta -= interval.TotalSeconds * 5;
+            Form1.Theta -= interval.TotalSeconds * 5;
+            if (basescale  >= Cube.Size)
             {
                 phase++;
             }
@@ -80,8 +112,11 @@ namespace MatrixTransformations
 
         public void Phase2(TimeSpan interval)
         {
-            Cube.RotationX += (float)interval.TotalSeconds;
-            xrotation += interval.TotalSeconds;
+            Cube.RotationX += (float)interval.TotalSeconds * 5;
+            xrotation += interval.TotalSeconds*5;
+
+            theta -= interval.TotalSeconds * 5;
+            Form1.Theta -= interval.TotalSeconds * 5;
             if (xrotation >= 45)
             {
                 phase++;
@@ -89,8 +124,11 @@ namespace MatrixTransformations
         }
         public void Phase3(TimeSpan interval)
         {
-            Cube.RotationX -= (float)interval.TotalSeconds;
-            xrotation -= interval.TotalSeconds;
+            Cube.RotationX -= (float)interval.TotalSeconds * 5;
+            xrotation -= interval.TotalSeconds*5;
+
+            theta -= interval.TotalSeconds * 5;
+            Form1.Theta -= interval.TotalSeconds * 5;
             if (xrotation <= 0)
             {
                 phase++;
@@ -99,8 +137,12 @@ namespace MatrixTransformations
 
         public void Phase4(TimeSpan interval)
         {
-            Cube.RotationY += (float)interval.TotalSeconds;
-            yrotation += interval.TotalSeconds;
+            Cube.RotationY += (float)interval.TotalSeconds * 5;
+            yrotation += interval.TotalSeconds*5;
+
+            phi += interval.TotalSeconds * 5;
+            Form1.Phi += interval.TotalSeconds * 5;
+
             if (yrotation >= 45)
             {
                 phase++;
@@ -108,9 +150,30 @@ namespace MatrixTransformations
         }
         public void Phase5(TimeSpan interval)
         {
-            Cube.RotationY -= (float)interval.TotalSeconds;
-            yrotation -= interval.TotalSeconds;
+            Cube.RotationY -= (float)interval.TotalSeconds * 5;
+            yrotation -= interval.TotalSeconds*5;
+
+            phi += interval.TotalSeconds * 5;
+            Form1.Phi += interval.TotalSeconds * 5;
             if (yrotation <= 0)
+            {
+                phase++;
+            }
+        }
+
+        public void Phase6(TimeSpan interval)
+        {
+            if(theta < 0)
+            {
+                theta += interval.TotalSeconds * 5;
+                Form1.Theta += interval.TotalSeconds * 5;
+            }
+            if(phi > 0)
+            {
+                phi -= interval.TotalSeconds * 5;
+                Form1.Phi -= interval.TotalSeconds * 5;
+            }
+            if(theta >= 0 || phi<=0)
             {
                 phase++;
             }

@@ -13,6 +13,7 @@ namespace MatrixTransformations
         // Objects
         Cube cube1;
         DisplayValues displayValues;
+        Annimation annimation;
 
         Vector3 Camera { get
             {
@@ -51,8 +52,8 @@ namespace MatrixTransformations
         }
         public static int CameraDistance;
 
-        public static int Theta;
-        public static int Phi;
+        public static double Theta;
+        public static double Phi;
 
         public static int d;
 
@@ -81,7 +82,7 @@ namespace MatrixTransformations
             // Create object
             cube1 = new Cube(Color.Black);
             displayValues = new DisplayValues(cube1);
-
+            annimation = new Annimation(this,cube1);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -93,6 +94,7 @@ namespace MatrixTransformations
 
             cube1.Draw(e.Graphics, VectorListToScreenCoords(ToIsometric(ViewTransformation(cube1.vb))));
             displayValues.Draw(e.Graphics);
+            annimation.Animate();
         }
 
 
@@ -280,9 +282,15 @@ namespace MatrixTransformations
             }
 
 
+            if(e.KeyCode == Keys.A)
+            {
+                annimation.StartAnimation();
+            }
+
 
             if (e.KeyCode == Keys.C)
             {
+                annimation.StopAnimation();
                 cube1.Reset();
             }
 
