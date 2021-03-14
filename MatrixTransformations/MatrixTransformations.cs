@@ -50,7 +50,7 @@ namespace MatrixTransformations
             return NothingMatrix;
         }
 
-        public static Matrix GetXRotationMatrix(float a)
+        public static Matrix GetXRotationMatrix(double a)
         {
             Matrix matrix = new Matrix();
             matrix.mat = new float[4, 4]

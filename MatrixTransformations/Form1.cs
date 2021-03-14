@@ -18,8 +18,8 @@ namespace MatrixTransformations
         Vector3 Camera { get
             {
 
-                var z = (float)(Math.Sin(phi) * CameraDistance);
-                var distance = Math.Cos(phi) * CameraDistance;
+                var z = (float)(Math.Sin(phi+Math.PI/2) * CameraDistance);
+                var distance = Math.Cos(phi + Math.PI / 2) * CameraDistance;
                 var x = (float)(Math.Sin(theta) * distance);
                 var y = (float)(Math.Cos(theta) * distance);
 
@@ -81,6 +81,7 @@ namespace MatrixTransformations
 
             // Create object
             cube1 = new Cube(Color.Black);
+
             displayValues = new DisplayValues(cube1);
             annimation = new Annimation(this,cube1);
         }
@@ -93,6 +94,7 @@ namespace MatrixTransformations
             axis.Draw(e.Graphics, VectorListToScreenCoords(ToIsometric(ViewTransformation(axis.vb))));
 
             cube1.Draw(e.Graphics, VectorListToScreenCoords(ToIsometric(ViewTransformation(cube1.vb))));
+
             displayValues.Draw(e.Graphics);
             annimation.Animate();
         }
@@ -118,7 +120,7 @@ namespace MatrixTransformations
         {
 
             Matrix thetaMatrix = MatrixTransformations.GetZRotationMatrix(theta);
-            Matrix phiMatrix = MatrixTransformations.GetYRotationMatrix(phi);
+            Matrix phiMatrix = MatrixTransformations.GetYRotationMatrix(phi + Math.PI/2);
 
             thetaMatrix.Invert();
             phiMatrix.Invert();
@@ -200,20 +202,20 @@ namespace MatrixTransformations
                 //rotation
                 if (e.KeyCode == Keys.Z)
                 {
-                    cube1.RotateZ(-0.1f);
+                    cube1.RotationZ--;
                 }
                 if (e.KeyCode == Keys.Y)
                 {
-                    cube1.RotateY(-0.1f);
+                    cube1.RotationY--;
                 }
                 if (e.KeyCode == Keys.X)
                 {
-                    cube1.RotateX(-0.1f);
+                    cube1.RotationX--;
                 }
                 //scale
                 if (e.KeyCode == Keys.S)
                 {
-                    cube1.Scale(0.9f);
+                    cube1.Size--;
                 }
 
                 //d
@@ -239,20 +241,20 @@ namespace MatrixTransformations
                 //rotation
                 if (e.KeyCode == Keys.Z)
                 {
-                    cube1.RotateZ(0.1f);
+                    cube1.RotationZ++;
                 }
                 if (e.KeyCode == Keys.Y)
                 {
-                    cube1.RotateY(0.1f);
+                    cube1.RotationY++;
                 }
                 if (e.KeyCode == Keys.X)
                 {
-                    cube1.RotateX(0.1f);
+                    cube1.RotationX++;
                 }
                 //scale
                 if (e.KeyCode == Keys.S)
                 {
-                    cube1.Scale(1.1f);
+                    cube1.Size++;
                 }
 
                 //d
