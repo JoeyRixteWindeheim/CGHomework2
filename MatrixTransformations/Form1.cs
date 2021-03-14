@@ -8,13 +8,53 @@ namespace MatrixTransformations
     public partial class Form1 : Form
     {
         // Axes
-        AxisX x_axis;
-        AxisY y_axis;
+        Axis axis;
 
         // Objects
         Cube cube1;
         DisplayValues displayValues;
-        
+
+        Vector3 Camera { get
+            {
+
+                var z = (float)(Math.Sin(phi) * CameraDistance);
+                var distance = Math.Cos(phi) * CameraDistance;
+                var x = (float)(Math.Sin(theta) * distance);
+                var y = (float)(Math.Cos(theta) * distance);
+
+                return new Vector3(x, y, z);
+            } 
+        }
+
+        private static double theta 
+        {
+            get
+            {
+                return Theta * Math.PI / 180;
+            }
+            set
+            {
+                Theta = (int)(value * 180/ Math.PI);
+            }
+        }
+
+        private static double phi
+        {
+            get
+            {
+                return Phi * Math.PI / 180;
+            }
+            set
+            {
+                Phi = (int)(value * 180 / Math.PI);
+            }
+        }
+        public static int CameraDistance;
+
+        public static int Theta;
+        public static int Phi;
+
+        public static int d;
 
         // Window dimensions
         const int WIDTH = 800;
@@ -24,13 +64,19 @@ namespace MatrixTransformations
         {
             InitializeComponent();
 
+            d = 20;
+            Theta = -100;
+            Phi = -10;
+            CameraDistance = 20;
+
+
+
             this.Width = WIDTH;
             this.Height = HEIGHT;
             this.DoubleBuffered = true;
 
             // Define axes
-            x_axis = new AxisX(200);
-            y_axis = new AxisY(200);
+            axis = new Axis(100);
 
             // Create object
             cube1 = new Cube(Color.Black);
@@ -43,21 +89,21 @@ namespace MatrixTransformations
             base.OnPaint(e);
 
             // Draw axes
-            //x_axis.Draw(e.Graphics, VectorListToScreenCoords(x_axis.vb));
-            //y_axis.Draw(e.Graphics, VectorListToScreenCoords(y_axis.vb));
+            axis.Draw(e.Graphics, VectorListToScreenCoords(ToIsometric(ViewTransformation(axis.vb))));
 
-            cube1.Draw(e.Graphics, ToPerspective(cube1.vb));
+            cube1.Draw(e.Graphics, VectorListToScreenCoords(ToIsometric(ViewTransformation(cube1.vb))));
             displayValues.Draw(e.Graphics);
         }
+
 
         public List<Vector2> VectorListToScreenCoords(List<Vector2> vectors)
         {
             int screenWidth = WIDTH;
             int screenHeight = HEIGHT;
-            Vector2 Translation = new Vector2(screenWidth / 2, screenHeight / 2*-1);
+            Vector2 Translation = new Vector2(screenWidth / 2, screenHeight / 2 * -1);
             List<Vector2> returnlist = new List<Vector2>();
 
-            foreach(Vector2 vector in vectors)
+            foreach (Vector2 vector in vectors)
             {
                 Vector2 returnvector = vector + Translation;
                 returnvector.y = returnvector.y * -1;
@@ -66,41 +112,50 @@ namespace MatrixTransformations
             return returnlist;
         }
 
-        public List<Vector2> ToPerspective(List<Vector3> vectors)
+        public List<Vector3> ViewTransformation(List<Vector3> vectors)
         {
-            int screenWidth = WIDTH;
-            int screenHeight = HEIGHT;
-            int cameraPosition = 100;
-            Vector2 Translation = new Vector2(screenWidth / 2, screenHeight / 2 * -1);
-            List<Vector2> returnlist = new List<Vector2>();
 
-            foreach (Vector3 vector in vectors)
+            Matrix thetaMatrix = MatrixTransformations.GetZRotationMatrix(theta);
+            Matrix phiMatrix = MatrixTransformations.GetYRotationMatrix(phi);
+
+            thetaMatrix.Invert();
+            phiMatrix.Invert();
+
+            List<Vector3> Transformed = new List<Vector3>();
+            foreach(Vector3 vector in vectors)
             {
-                Vector2 returnvector = new Vector2(vector.X, vector.Z);
-                var distancetocamera = cameraPosition - vector.Y;
-                returnvector /= (distancetocamera/100);
-
-
-                returnvector = returnvector + Translation;
-                returnvector.y = returnvector.y * -1;
-
-
-                returnlist.Add(returnvector);
+                //var newvector = vector - Camera;
+                Matrix vectorMatrix = new Matrix(vector);
+                vectorMatrix = thetaMatrix * vectorMatrix;
+                vectorMatrix = phiMatrix * vectorMatrix;
+                Transformed.Add(vectorMatrix.ToVector3() - Camera);
             }
-            return returnlist;
+            return Transformed;
         }
+
+
+        public List<Vector2> ProjectionTransformation(List<Vector3> vectors)
+        {
+            List<Vector2> projection = new List<Vector2>();
+            foreach(Vector3 vector in vectors)
+            {
+                var projectionmatrix = MatrixTransformations.getPerspectiveTransformation(vector.Z, d);
+
+                var matrix = new Matrix(vector);
+
+                projection.Add((projectionmatrix * matrix).ToVector2());
+            }
+            return projection;
+        }
+
 
         public List<Vector2> ToIsometric(List<Vector3> vectors)
         {
-            int screenWidth = WIDTH;
-            int screenHeight = HEIGHT;
-            Vector2 Translation = new Vector2(screenWidth / 2, screenHeight / 2 * -1);
             List<Vector2> returnlist = new List<Vector2>();
 
             foreach (Vector3 vector in vectors)
             {
-                Vector2 returnvector = new Vector2(vector.X, vector.Z);
-                returnvector = returnvector + Translation;
+                Vector2 returnvector = new Vector2(vector.X, vector.Y);
                 returnvector.y = returnvector.y * -1;
                 returnlist.Add(returnvector);
             }
@@ -109,13 +164,16 @@ namespace MatrixTransformations
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+
+
+            //translation
             if (e.KeyCode == Keys.Up)
             {
-                cube1.Translate(new Vector3(0, 0, 2));
+                cube1.Translate(new Vector3(0, 2, 0));
             }
             if (e.KeyCode == Keys.Down)
             {
-                cube1.Translate(new Vector3(0, 0, -2));
+                cube1.Translate(new Vector3(0, -2, 0));
             }
             if (e.KeyCode == Keys.Left)
             {
@@ -125,22 +183,110 @@ namespace MatrixTransformations
             {
                 cube1.Translate(new Vector3(2, 0, 0));
             }
-            if (e.KeyCode == Keys.Z)
+            if (e.KeyCode == Keys.PageUp)
             {
-                cube1.RotateZ(0.1f);
+                cube1.Translate(new Vector3(0, 0, 2));
             }
-            if (e.KeyCode == Keys.Y)
+            if (e.KeyCode == Keys.PageDown)
             {
-                cube1.RotateY(0.1f);
+                cube1.Translate(new Vector3(0, 0, -2));
             }
-            if (e.KeyCode == Keys.X)
+
+
+            if (e.Shift)
             {
-                cube1.RotateX(0.1f);
+                //rotation
+                if (e.KeyCode == Keys.Z)
+                {
+                    cube1.RotateZ(-0.1f);
+                }
+                if (e.KeyCode == Keys.Y)
+                {
+                    cube1.RotateY(-0.1f);
+                }
+                if (e.KeyCode == Keys.X)
+                {
+                    cube1.RotateX(-0.1f);
+                }
+                //scale
+                if (e.KeyCode == Keys.S)
+                {
+                    cube1.Scale(0.9f);
+                }
+
+                //d
+                if (e.KeyCode == Keys.D)
+                {
+                    d--;
+                }
+                //theta
+                if (e.KeyCode == Keys.T)
+                {
+                    Theta--;
+                }
+                //phi
+                if (e.KeyCode == Keys.P)
+                {
+                    Phi--;
+                }
+
+
             }
+            else
+            {
+                //rotation
+                if (e.KeyCode == Keys.Z)
+                {
+                    cube1.RotateZ(0.1f);
+                }
+                if (e.KeyCode == Keys.Y)
+                {
+                    cube1.RotateY(0.1f);
+                }
+                if (e.KeyCode == Keys.X)
+                {
+                    cube1.RotateX(0.1f);
+                }
+                //scale
+                if (e.KeyCode == Keys.S)
+                {
+                    cube1.Scale(1.1f);
+                }
+
+                //d
+                if (e.KeyCode == Keys.D)
+                {
+                    d++;
+                }
+                //theta
+                if (e.KeyCode == Keys.T)
+                {
+                    Theta++;
+                }
+                //phi
+                if (e.KeyCode == Keys.P)
+                {
+                    Phi++;
+                }
+            }
+
+            if(e.KeyCode == Keys.OemMinus)
+            {
+                CameraDistance++;
+            }
+            if (e.KeyCode == Keys.Oemplus)
+            {
+                CameraDistance--;
+            }
+
+
+
             if (e.KeyCode == Keys.C)
             {
                 cube1.Reset();
             }
+
+
             Invalidate();
 
             if (e.KeyCode == Keys.Escape)

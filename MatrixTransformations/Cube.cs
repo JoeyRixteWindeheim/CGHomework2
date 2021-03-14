@@ -10,7 +10,7 @@ namespace MatrixTransformations
     public class Cube
     {
         Color color;
-        private int size;
+        public float size;
         private float weight;
 
         public List<Vector3> vb;
@@ -53,7 +53,7 @@ namespace MatrixTransformations
         public int PositionY { get => (int)_position.Y; set { Position = new Vector3(_position.X, value, _position.Z); } }
         public int PositionZ { get => (int)_position.Z; set { Position = new Vector3(_position.X, _position.Y, value); } }
 
-        public Cube(Color color, int size = 100, float weight = 3)
+        public Cube(Color color, int size = 10, float weight = 3)
         {
             this.color = color;
             this.weight = weight;
@@ -99,6 +99,8 @@ namespace MatrixTransformations
             RotationZ = 0;
             RotationX = 0;
             RotationY = 0;
+            _position = new Vector3();
+
 
             vb = new List<Vector3>
             {
@@ -128,10 +130,17 @@ namespace MatrixTransformations
 
         public void Scale(float s)
         {
-            for (int i = 0; i < 4; i++)
+            Vector3 p = _position;
+            Translate(new Vector3() - p);
+            var scale = MatrixTransformations.getScaleMatrix(s);
+            for (int i = 0; i < 8; i++)
             {
-                vb[i] = new Matrix(vb[i]).ScaleMatrix(s).ToVector3();
+                
+                vb[i] = (scale * new Matrix(vb[i])).ToVector3();
             }
+            Translate(p);
+
+            size *= s;
         }
 
         public void RotateX(float a)
@@ -143,13 +152,7 @@ namespace MatrixTransformations
             {
                 _rotationX -= (float)Math.PI * 2;
             }
-            Matrix matrix = new Matrix();
-            matrix.mat = new float[3, 3] 
-            { 
-                {1,0,0 }, 
-                {0,(float)Math.Cos(a),-(float)Math.Sin(a) }, 
-                {0,(float)Math.Sin(a),(float)Math.Cos(a) } 
-            };
+            Matrix matrix = MatrixTransformations.GetXRotationMatrix(a);
 
             for(int i = 0; i < 8; i++)
             {
@@ -167,13 +170,7 @@ namespace MatrixTransformations
             {
                 _rotationY -= (float)Math.PI * 2;
             }
-            Matrix matrix = new Matrix();
-            matrix.mat = new float[3, 3]
-            {
-                {(float)Math.Cos(a),0,(float)Math.Sin(a) },
-                {0,1,0 },
-                {-(float)Math.Sin(a),0,(float)Math.Cos(a) }
-            };
+            Matrix matrix = MatrixTransformations.GetYRotationMatrix(a);
 
             for (int i = 0; i < 8; i++)
             {
@@ -193,13 +190,7 @@ namespace MatrixTransformations
             {
                 _rotationZ -= (float)Math.PI * 2;
             }
-            Matrix matrix = new Matrix();
-            matrix.mat = new float[3, 3]
-            {
-                {(float)Math.Cos(a),-(float)Math.Sin(a),0 },
-                {(float)Math.Sin(a),(float)Math.Cos(a),0 },
-                {0,0,1 }
-            };
+            Matrix matrix = MatrixTransformations.GetZRotationMatrix(a);
 
             for (int i = 0; i < 8; i++)
             {

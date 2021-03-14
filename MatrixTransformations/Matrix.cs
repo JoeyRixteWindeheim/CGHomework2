@@ -20,7 +20,7 @@ namespace MatrixTransformations
 
         public Matrix(Vector3 vector)
         {
-            mat = new float[3, 3] { { vector.X, 0, 0 }, { vector.Y, 0, 0 }, { vector.Z, 0, 0 } };
+            mat = new float[1, 4] {{ vector.X ,  vector.Y ,  vector.Z,1 } };
         }
 
         public Matrix(Vector2 vector)
@@ -79,26 +79,7 @@ namespace MatrixTransformations
             return rMatrix;
         }
 
-        public Matrix ScaleMatrix(float s)
-        {
-            Matrix ScaleMatrix = new Matrix(X,Y);
-            for (int x = 0; x < X; x++)
-            {
-                for (int y = 0; y < Y; y++)
-                {
-                    if(x == y)
-                    {
-                        ScaleMatrix.mat[x, y] = s;
-                    }
-                    else
-                    {
-                        ScaleMatrix.mat[x, y] = 0;
-                    }
-                }
-            }
 
-            return this * ScaleMatrix;
-        }
 
         public static Matrix operator *(float f, Matrix m1)
         {
@@ -115,7 +96,7 @@ namespace MatrixTransformations
         }
         public static Matrix operator *(Matrix m1, Matrix m2)
         {
-            if (m1.X != m2.Y || m1.Y != m2.X)
+            if (m1.X != m2.Y)
             {
                 return null;
             }
@@ -125,26 +106,28 @@ namespace MatrixTransformations
             {
                 for (int y = 0; y < m1.Y; y++)
                 {
-                    rMatrix.mat[x, y] = MultiplyArray(m1.GetRow(x), m2.GetColumn(y));
+                    var row = m1.GetRow(y);
+                    var col = m2.GetColumn(x);
+                    rMatrix.mat[x, y] = MultiplyArray(row, col);
                 }
             }
             return rMatrix;
         }
         public float[] GetColumn(int index)
         {
-            float[] rFloat = new float[X];
-            for(int i = 0; i < X; i++)
+            float[] rFloat = new float[Y];
+            for(int i = 0; i < Y; i++)
             {
-                rFloat[i] = mat[i, index];
+                rFloat[i] = mat[ index,i];
             }
             return rFloat;
         }
-        public float[] GetRow(int index)
+        public float[] GetRow(int RowIndex)
         {
-            float[] rFloat = new float[Y];
-            for (int i = 0; i < Y; i++)
+            float[] rFloat = new float[X];
+            for (int i = 0; i < X; i++)
             {
-                rFloat[i] = mat[index, i];
+                rFloat[i] = mat[i,RowIndex];
             }
             return rFloat;
         }
@@ -158,13 +141,27 @@ namespace MatrixTransformations
         public Vector2 ToVector2()
         {
             if (Y < 2) { return null; }
-            return new Vector2(mat[0, 0], mat[1, 0]);
+            return new Vector2(mat[0, 0], mat[0, 1]);
         }
 
         public Vector3 ToVector3()
         {
             if (Y < 3) { return null; }
-            return new Vector3(mat[0, 0], mat[1, 0],mat[2,0]);
+            return new Vector3(mat[0, 0], mat[0, 1],mat[0,2]);
+        }
+
+        public void Invert()
+        {
+            for(int x = 0; x < X; x++)
+            {
+                for (int y = 0; y < X; y++)
+                {
+                    if (x != y)
+                    {
+                        mat[x, y] = -mat[x, y];
+                    }
+                }
+            }
         }
     }
 }

@@ -14,7 +14,6 @@ namespace MatrixTransformations
         public float XRotation { get => _cube.RotationX; }
         public float YRotation { get => _cube.RotationY; }
         public float ZRotation { get => _cube.RotationZ; }
-
         public int XPosition { get => _cube.PositionX; }
         public int YPosition { get => _cube.PositionY; }
         public int ZPosition { get => _cube.PositionZ; }
@@ -33,6 +32,10 @@ namespace MatrixTransformations
             DrawString(g, "x position: " + XPosition);
             DrawString(g, "y position: " + YPosition);
             DrawString(g, "z position: " + ZPosition);
+            DrawString(g, "d: " + Form1.d);
+            DrawString(g, "phi: " + Form1.Phi);
+            DrawString(g, "theta: " + Form1.Theta);
+            DrawString(g, "Zoom: " + Form1.CameraDistance);
             _stringposition = 0;
         }
 
