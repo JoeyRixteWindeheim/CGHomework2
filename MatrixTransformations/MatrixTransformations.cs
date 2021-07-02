@@ -50,6 +50,20 @@ namespace MatrixTransformations
             return NothingMatrix;
         }
 
+        public static Matrix ViewMatrix(float r, float phiRad, float thetaRad)
+        {
+            Matrix resultingMatrix = new Matrix();
+            resultingMatrix.mat = new float[4, 4] 
+            {
+                { (float)(-1 * Math.Sin(thetaRad)), (float)(Math.Cos(thetaRad)), 0, 0},
+                { (float)(-1 * Math.Cos(thetaRad) * Math.Cos(phiRad)), (float)(-1 * Math.Cos(phiRad) * Math.Sin(thetaRad)), (float)(Math.Sin(phiRad)), 0},
+                { (float)(Math.Cos(thetaRad) * Math.Sin(phiRad)), (float)(Math.Sin(thetaRad) * Math.Sin(phiRad)), (float)(Math.Cos(phiRad)), -1 * r},
+                { 0, 0, 0, 1}
+            };
+            return resultingMatrix;
+            
+        }
+
         public static Matrix GetXRotationMatrix(double a)
         {
             Matrix matrix = new Matrix();
@@ -83,7 +97,7 @@ namespace MatrixTransformations
             Matrix matrix = new Matrix();
             matrix.mat = new float[4, 4]
             {
-                {(float)Math.Cos(a),-(float)Math.Sin(a),0,0 },
+                {(float)Math.Cos(a ),-(float)Math.Sin(a),0,0 },
                 {(float)Math.Sin(a),(float)Math.Cos(a),0,0 },
                 {0,0,1,0 },
                 {0,0,0,1 }

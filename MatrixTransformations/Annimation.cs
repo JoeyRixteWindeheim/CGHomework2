@@ -141,7 +141,7 @@ namespace MatrixTransformations
             yrotation += interval.TotalSeconds*5;
 
             phi += interval.TotalSeconds * 5;
-            Form1.Phi += interval.TotalSeconds * 5;
+            Form1.phi_degrees += interval.TotalSeconds * 5;
 
             if (yrotation >= 45)
             {
@@ -154,7 +154,7 @@ namespace MatrixTransformations
             yrotation -= interval.TotalSeconds*5;
 
             phi += interval.TotalSeconds * 5;
-            Form1.Phi += interval.TotalSeconds * 5;
+            Form1.phi_degrees += interval.TotalSeconds * 5;
             if (yrotation <= 0)
             {
                 phase++;
@@ -171,7 +171,7 @@ namespace MatrixTransformations
             if(phi > 0)
             {
                 phi -= interval.TotalSeconds * 5;
-                Form1.Phi -= interval.TotalSeconds * 5;
+                Form1.phi_degrees -= interval.TotalSeconds * 5;
             }
             if(theta >= 0 || phi<=0)
             {

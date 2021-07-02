@@ -13,6 +13,9 @@ namespace MatrixTransformations
         public int Y => mat.GetLength(1);
 
         public Matrix() { }
+
+        // Allows matrixes of any size to be created.
+        // Functionally, the constructor of 1x1, 2x2, 3x3, 4x4, 2x4 matrixes, etc
         public Matrix(int x, int y)
         {
             mat = new float[x, y];

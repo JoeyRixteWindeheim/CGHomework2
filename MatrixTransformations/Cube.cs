@@ -64,7 +64,7 @@ namespace MatrixTransformations
         {
             this.color = color;
             this.weight = weight;
-            this.size = size /= 2;
+            this.size = (float)size / 2;
             _position = new Vector3(0, 0, 0);
 
             vb = new List<Vector3>
@@ -106,7 +106,7 @@ namespace MatrixTransformations
             RotationZ = 0;
             RotationX = 0;
             RotationY = 0;
-            size = 5;
+            size = 1;
             _position = new Vector3();
 
 

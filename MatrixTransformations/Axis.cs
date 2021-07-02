@@ -11,7 +11,7 @@ namespace MatrixTransformations
         public List<Color> colors;
         public List<string> name;
  
-        public Axis(int size=100)
+        public Axis(int size=5)
         {
             this.size = size;
 
@@ -26,11 +26,11 @@ namespace MatrixTransformations
             name.Add("x");
 
             vb.Add(new Vector3(0, size, 0));
-            colors.Add(Color.Blue);
+            colors.Add(Color.Green);
             name.Add("y");
 
-            vb.Add(new Vector3(0, 0, size));
-            colors.Add(Color.Yellow);
+            vb.Add(new Vector3(0, 0, -size));
+            colors.Add(Color.Blue);
             name.Add("z");
 
 

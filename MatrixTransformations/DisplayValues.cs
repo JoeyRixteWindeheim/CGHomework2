@@ -28,17 +28,19 @@ namespace MatrixTransformations
         }
         public void Draw(Graphics g)
         {
-            DrawString(g, "x rotation: " + XRotation);
-            DrawString(g, "y rotation: " + YRotation);
-            DrawString(g, "z rotation: " + ZRotation);
-            DrawString(g, "cube size: " + Size*2);
-            DrawString(g, "x position: " + XPosition);
-            DrawString(g, "y position: " + YPosition);
-            DrawString(g, "z position: " + ZPosition);
-            DrawString(g, "d: " + Form1.d);
-            DrawString(g, "phi: " + Form1.Phi);
-            DrawString(g, "theta: " + Form1.Theta);
-            DrawString(g, "Zoom: " + Form1.CameraDistance);
+            DrawString(g, "x rotation: " + XRotation + " X / x");
+            DrawString(g, "y rotation: " + YRotation + " Y / y");
+            DrawString(g, "z rotation: " + ZRotation + " Z / z");
+            DrawString(g, "cube size: " + (Size * 2) + " S / s");
+            DrawString(g, "x position: " + XPosition + " Left / Right");
+            DrawString(g, "y position: " + YPosition + " Up / Down");
+            DrawString(g, "z position: " + ZPosition + " PgDn / PgUp");
+            DrawString(g, "d: " + Form1.d + " D / d");
+            DrawString(g, "phi: " + Form1.phi_degrees + " P / p");
+            DrawString(g, "theta: " + Form1.Theta + " T / t");
+            DrawString(g, "r: " + Form1.r + " + / -");
+            DrawString(g, "Animation: A");
+            DrawString(g, "Reset: C");
             _stringposition = 0;
         }
 
