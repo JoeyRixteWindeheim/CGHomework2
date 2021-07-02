@@ -148,6 +148,7 @@ namespace UnitTests
 
 
             Matrix expected = CreateMatrix(expectedMatrix);
+
             // act
             Matrix resultingMatrix = firstMatrix * secondMatrix;
 

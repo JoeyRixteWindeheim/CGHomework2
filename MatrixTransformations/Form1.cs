@@ -187,27 +187,27 @@ namespace MatrixTransformations
             //translation
             if (e.KeyCode == Keys.Up)
             {
-                cube1.Translate(new Vector3(0, 2, 0));
+                cube1.Translate(new Vector3(0, -0.1f, 0));
             }
             if (e.KeyCode == Keys.Down)
             {
-                cube1.Translate(new Vector3(0, -2, 0));
+                cube1.Translate(new Vector3(0, 0.1f, 0));
             }
             if (e.KeyCode == Keys.Left)
             {
-                cube1.Translate(new Vector3(-2, 0, 0));
+                cube1.Translate(new Vector3(0.1f, 0, 0));
             }
             if (e.KeyCode == Keys.Right)
             {
-                cube1.Translate(new Vector3(2, 0, 0));
+                cube1.Translate(new Vector3(-0.1f, 0, 0));
             }
             if (e.KeyCode == Keys.PageUp)
             {
-                cube1.Translate(new Vector3(0, 0, 2));
+                cube1.Translate(new Vector3(0, 0, -0.1f));
             }
             if (e.KeyCode == Keys.PageDown)
             {
-                cube1.Translate(new Vector3(0, 0, -2));
+                cube1.Translate(new Vector3(0, 0, 0.1f));
             }
 
 
@@ -229,7 +229,7 @@ namespace MatrixTransformations
                 //scale
                 if (e.KeyCode == Keys.S)
                 {
-                    cube1.Size--;
+                    cube1.Size -= 0.05f;
                 }
 
                 //d
@@ -268,7 +268,7 @@ namespace MatrixTransformations
                 //scale
                 if (e.KeyCode == Keys.S)
                 {
-                    cube1.Size++;
+                    cube1.Size += 0.05f;
                 }
 
                 //d
